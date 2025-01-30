@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+:root {
+    --main-color: #eddeff;
+}
+
+.container {
+    /* min-height: 700px;
+    flex-wrap: wrap;*/
+    display: flex;
+    height: 100vh;
+    background-image: url(heart.jpg);
+    background-repeat: repeat;
+    background-size: 90px;
+    background-position: left;
+    border-left: 50px solid var(--main-color);
+}
+
+.addNotes {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addNotes h1 {
+    text-transform: capitalize;
+    text-align: center;
+    font-weight: 500;
+    color: #8568a8;
+
+}
+
+.addNotes p {
+    width: 400px;
+    height: 140px;
+    background-color: aliceblue;
+    border: 1px solid #ccc;
+    border-radius: 2em;
+    outline: none;
+    display: flex;
+    justify-content: center
+}
+
+
+
+.notesList {
+    width: 60%;
+    padding: 20px 40px;
+    background-color: aliceblue;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.notesList .note {
+    width: 250px;
+    height: 250px;
+    background-color: #eddeff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    cursor: pointer;
+    word-wrap: break-word;
+    text-align: center;
+    padding: 20px;
+}
