@@ -7,18 +7,22 @@ body {
 
 :root {
     --main-color: #eddeff;
+    --second-color: #f9ea85;
 }
 
 .container {
     /* min-height: 700px;
-    flex-wrap: wrap;*/
-    display: flex;
-    height: 100vh;
-    background-image: url(heart.jpg);
+    flex-wrap: wrap;
+    background-image: url(heart.jpg); 
+    border-left: 60px solid var(--main-color);
     background-repeat: repeat;
     background-size: 90px;
-    background-position: left;
-    border-left: 50px solid var(--main-color);
+    background-position: left;*/
+    display: flex;
+    height: 100vh;
+    background-color: #eddeff;
+
+
 }
 
 .addNotes {
@@ -27,6 +31,24 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+}
+
+.screen-backdrop {
+    width: 100%;
+    height: 30rem;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 50% 50%;
+    background-color: #f9ea85;
+    z-index: 1;
+}
+
+.info {
+    z-index: 2;
 }
 
 .addNotes h1 {
@@ -34,18 +56,20 @@ body {
     text-align: center;
     font-weight: 500;
     color: #8568a8;
+    margin-bottom: 5px;
 
 }
 
 .addNotes p {
     width: 400px;
-    height: 140px;
+    height: 110px;
     background-color: aliceblue;
-    border: 1px solid #ccc;
+    border: 1px solid var(--main-color);
     border-radius: 2em;
     outline: none;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    margin: 0;
 }
 
 
@@ -63,8 +87,7 @@ body {
 .notesList .note {
     width: 250px;
     height: 250px;
-    background-color: #eddeff;
-    border: 1px solid #ccc;
+    background-color: var(--main-color);
     border-radius: 10px;
     overflow: hidden;
     overflow-y: auto;
@@ -72,4 +95,5 @@ body {
     word-wrap: break-word;
     text-align: center;
     padding: 20px;
+    box-shadow: 3px 4px 13px -4px gray;
 }
