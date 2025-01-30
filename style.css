@@ -8,6 +8,7 @@ body {
 :root {
     --main-color: #eddeff;
     --second-color: #f9ea85;
+    --text-color: #8568a8;
 }
 
 .container {
@@ -21,8 +22,7 @@ body {
     display: flex;
     height: 100vh;
     background-color: #eddeff;
-
-
+    color: var(--text-color)
 }
 
 .addNotes {
@@ -55,7 +55,6 @@ body {
     text-transform: capitalize;
     text-align: center;
     font-weight: 500;
-    color: #8568a8;
     margin-bottom: 5px;
 
 }
