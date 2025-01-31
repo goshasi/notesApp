@@ -71,14 +71,12 @@ body {
     margin: 0;
 }
 
-
-
 .notesList {
     width: 60%;
     padding: 20px 40px;
     background-color: aliceblue;
-    display: flex;
     flex-wrap: wrap;
+    display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
