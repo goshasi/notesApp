@@ -71,6 +71,91 @@ body {
     margin: 0;
 }
 
+.note-box {
+    min-width: 300px;
+    min-height: 250px;
+    background-color: #8568a8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 2em;
+}
+
+#note-title {
+    text-align: center;
+    background: none
+}
+
+#note-content {
+    align-self: start;
+    width: -webkit-fill-available;
+    background: none
+}
+
+#note-content,
+#note-title,
+.btn {
+    border: none;
+    outline: none;
+}
+
+#note-content::placeholder {
+    color: var(--main-color);
+    font-size: 16px
+}
+
+#note-title::placeholder {
+    color: var(--main-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#note-title:hover {
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    padding: 5px
+}
+
+#note-content:hover {
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+}
+
+#delete-note {
+    background-color: var(--second-color);
+    padding: 5px 15px;
+    border-radius: 50%;
+    width: 40px;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px 4px 13px -4px rgb(207, 206, 206);
+}
+
+#delete-note i {
+    color: var(--text-color);
+    font-size: 16px;
+
+}
+
+#add-note-btn {
+    background-color: var(--second-color);
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    box-shadow: 3px 4px 13px -4px gray;
+}
+
+#add-note-btn i {
+    font-size: 20px;
+    color: var(--text-color);
+}
+
 .notesList {
     width: 60%;
     padding: 20px 40px;

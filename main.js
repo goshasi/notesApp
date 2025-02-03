@@ -1,6 +1,4 @@
-const pNotes = document.getElementById("p-note");
-
-
+/*const pNotes = document.getElementById("p-note");
 let dataNote = [
     { title: "note1", "text": "hi this is text one" },
 
@@ -40,3 +38,4 @@ pNotes.addEventListener('keydown', function (event) {
         readNote();
     }
 });
+*/
