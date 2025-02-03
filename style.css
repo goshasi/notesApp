@@ -21,7 +21,6 @@ body {
     background-position: left;*/
     display: flex;
     height: 100vh;
-    background-color: #eddeff;
     color: var(--text-color)
 }
 
@@ -32,7 +31,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-
+    background-color: var(--main-color);
 }
 
 .screen-backdrop {
@@ -124,31 +123,19 @@ body {
     border-radius: 10px;
 }
 
-#delete-note {
-    background-color: var(--second-color);
-    padding: 5px 15px;
+.btn {
     border-radius: 50%;
     width: 40px;
     display: flex;
     height: 40px;
     justify-content: center;
     align-items: center;
-    box-shadow: 3px 4px 13px -4px rgb(207, 206, 206);
-}
-
-#delete-note i {
-    color: var(--text-color);
-    font-size: 16px;
-
 }
 
 #add-note-btn {
     background-color: var(--second-color);
-    font-size: 20px;
-    border-radius: 10px;
-    padding: 10px 20px;
     font-size: 16px;
-    box-shadow: 3px 4px 13px -4px gray;
+    box-shadow: 3px 4px 13px -4px rgb(207, 206, 206);
 }
 
 #add-note-btn i {
@@ -156,17 +143,36 @@ body {
     color: var(--text-color);
 }
 
+#delete-note {
+    background-color: var(--second-color);
+    box-shadow: 3px 4px 13px -4px gray;
+
+}
+
+#delete-note i {
+    color: var(--text-color);
+    font-size: 18px;
+
+}
+
+#delete-note-item {
+    background-color: var(--text-color);
+    box-shadow: 3px 4px 13px -4px gray;
+}
+
+
+
 .notesList {
     width: 60%;
     padding: 20px 40px;
-    background-color: aliceblue;
+
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.notesList .note {
+.notesList #note {
     width: 250px;
     height: 250px;
     background-color: var(--main-color);
@@ -178,4 +184,12 @@ body {
     text-align: center;
     padding: 20px;
     box-shadow: 3px 4px 13px -4px gray;
+}
+
+#note .btn {
+    display: flex;
+    justify-self: flex-end;
+    background-color: var(--text-color);
+    color: var(--second-color);
+    font-size: 18px;
 }

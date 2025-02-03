@@ -39,3 +39,16 @@ pNotes.addEventListener('keydown', function (event) {
     }
 });
 */
+const noteTitle = document.getElementById("note-title");
+const noteBox = document.getElementById("note-content");
+const deleteBtn = document.getElementById("delete-note");
+const addBtn = document.getElementById("add-note-btn");
+const noteList = document.getElementById("notesList");
+
+document.addEventListener("load", () => { });// local storage
+
+addBtn.addEventListener("click", () => {
+    let noteP = document.createElement("div");
+
+});
+
