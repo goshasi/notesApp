@@ -38,17 +38,54 @@ pNotes.addEventListener('keydown', function (event) {
         readNote();
     }
 });
-*/
 const noteTitle = document.getElementById("note-title");
-const noteBox = document.getElementById("note-content");
-const deleteBtn = document.getElementById("delete-note");
+const notetext = document.getElementById("note-content");
+*/
+
 const addBtn = document.getElementById("add-note-btn");
-const noteList = document.getElementById("notesList");
+const noteTitle = document.getElementById("note-title");
+const notetext = document.getElementById("note-content");
+const noteList = document.querySelector(".notesList");
 
-document.addEventListener("load", () => { });// local storage
 
-addBtn.addEventListener("click", () => {
-    let noteP = document.createElement("div");
+// 2 get data
+const allNotes = JSON.parse(localStorage.getItem("allNotes"));
+if (allNotes) {
+    allNotes.forEach(eletxt => addNote(eletxt));
+}
+// ✅
+addBtn.addEventListener("click", () => addNote());
 
+function addNote(text = { title: "", content: "" }) {
+    const noteEle = document.createElement("div");
+    noteEle.classList.add("note");
+    noteEle.innerHTML =
+        `
+        <h2>${noteTitle.value}</h2>
+        <p>${notetext.value}</p>
+        <button id="delete-note" class="btn"><i class="fa-solid fa-trash-can"></i></button>
+    `;
+    // note'un içindeki silme btn'u
+    noteEle.querySelector("button").addEventListener("click", function () {
+        noteEle.remove();
+        getsNote();
+    });
+
+    noteList.appendChild(noteEle);
+
+}
+
+// ana silme btn'u✅
+const deleteBtn = document.getElementById("delete-note");
+deleteBtn.addEventListener("click", function () {
+    noteList.remove();
+    getsNote();
 });
+// 1 set data
 
+function getsNote() {
+    const noteElements = document.querySelectorAll("textarea");
+    const allNotes = [];
+    noteElements.forEach(note => allNotes.push(note.value));
+    localStorage.setItem("allNotes", JSON.stringify(allNotes));
+} 

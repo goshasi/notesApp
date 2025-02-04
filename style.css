@@ -172,7 +172,8 @@ body {
     align-items: flex-start;
 }
 
-.notesList #note {
+.notesList .note {
+
     width: 250px;
     height: 250px;
     background-color: var(--main-color);
@@ -186,7 +187,7 @@ body {
     box-shadow: 3px 4px 13px -4px gray;
 }
 
-#note .btn {
+.note .btn {
     display: flex;
     justify-self: flex-end;
     background-color: var(--text-color);
