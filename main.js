@@ -44,15 +44,27 @@ const notetext = document.getElementById("note-content");
 
 const addBtn = document.getElementById("add-note-btn");
 const noteTitle = document.getElementById("note-title");
-const notetext = document.getElementById("note-content");
+const textareaEl = document.querySelector("textarea");
 const noteList = document.querySelector(".notesList");
 
 
 // 2 get data
+/*
 const allNotes = JSON.parse(localStorage.getItem("allNotes"));
 if (allNotes) {
     allNotes.forEach(eletxt => addNote(eletxt));
 }
+
+let allNote = localStorage.getItem("keyname");
+allNote.forEach(item => {
+    addNote(item);
+});
+*/
+
+function getDataFromStorage() {
+    return JSON.parse(window.localStorage.getItem("allNotes"));
+}
+
 // ✅
 addBtn.addEventListener("click", () => addNote());
 
@@ -62,15 +74,15 @@ function addNote(text = { title: "", content: "" }) {
     noteEle.innerHTML =
         `
         <h2>${noteTitle.value}</h2>
-        <p>${notetext.value}</p>
+        <p>${textareaEl.value}</p>
         <button id="delete-note" class="btn"><i class="fa-solid fa-trash-can"></i></button>
     `;
     // note'un içindeki silme btn'u
-    noteEle.querySelector("button").addEventListener("click", function () {
+    noteEle.querySelector("#delete-note").addEventListener("click", function () {
         noteEle.remove();
-        getsNote();
-    });
 
+    });
+    getDataFromStorage();
     noteList.appendChild(noteEle);
 
 }
@@ -79,13 +91,51 @@ function addNote(text = { title: "", content: "" }) {
 const deleteBtn = document.getElementById("delete-note");
 deleteBtn.addEventListener("click", function () {
     noteList.remove();
-    getsNote();
+    getDataFromStorage();
 });
+
+addBtn.addEventListener("click", () => getsNote());
+function getsNote() {
+    const allNotes = [];
+    const noteElements = document.querySelectorAll(".note");
+    //console.log(noteElements);
+
+    noteElements.forEach(note => allNotes.push(note));
+    localStorage.setItem("allNotes", JSON.stringify(allNotes));
+
+}
+
 // 1 set data
+/*
+for man
+
+addBtn.addEventListener("click", () => getsNote());
 
 function getsNote() {
-    const noteElements = document.querySelectorAll("textarea");
-    const allNotes = [];
-    noteElements.forEach(note => allNotes.push(note.value));
-    localStorage.setItem("allNotes", JSON.stringify(allNotes));
-} 
+    //let allNote = document.querySelectorAll(noteEle);
+    //console.log(allNote);
+    localStorage.setItem("keyname", addNote());
+}
+getsNote();
+}
+
+
+
+
+
+function gets() {
+
+    let titles = localStorage.getItem("valuetit");
+    let texts = localStorage.getItem("valuetex");
+}
+gets();
+
+function display() {
+    localStorage.setItem("valuetex", textareaEl.value);
+    localStorage.setItem("valuetit", noteTitle.value);
+    console.log(textareaEl.value);
+}
+display();
+*/
+
+
