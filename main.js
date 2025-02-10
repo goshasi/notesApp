@@ -41,13 +41,6 @@ pNotes.addEventListener('keydown', function (event) {
 const noteTitle = document.getElementById("note-title");
 const notetext = document.getElementById("note-content");
 */
-
-const addBtn = document.getElementById("add-note-btn");
-const noteTitle = document.getElementById("note-title");
-const textareaEl = document.querySelector("textarea");
-const noteList = document.querySelector(".notesList");
-
-
 // 2 get data
 /*
 const allNotes = JSON.parse(localStorage.getItem("allNotes"));
@@ -62,10 +55,24 @@ allNote.forEach(item => {
 */
 
 
-// ✅
+
+const addBtn = document.getElementById("add-note-btn");
+const noteTitle = document.getElementById("note-title");
+const textareaEl = document.querySelector("textarea");
+const noteList = document.querySelector(".notesList");
+
+// load all notes
+window.addEventListener("load", displayNotes);
+
+// yeni note ekleme with event
 addBtn.addEventListener("click", () => addNote());
 
 function addNote() {
+    if (noteTitle.value.trim() === "" || textareaEl.value.trim() === "") {
+        alert("please enter ur title and note!");
+        return;
+    }
+
     const noteEle = document.createElement("div");
     noteEle.classList.add("note");
     noteEle.innerHTML =
@@ -74,35 +81,73 @@ function addNote() {
         <p>${textareaEl.value}</p>
         <button id="delete-note" class="btn"><i class="fa-solid fa-trash-can"></i></button>
         `;
-    // note'un içindeki silme btn'u
+
+    // note'un içindeki silme btn'u✅
     noteEle.querySelector("#delete-note").addEventListener("click", function () {
         noteEle.remove();
-
+        removeNoteFromLocalStorage(note.title, note.content);
     });
+
     noteList.appendChild(noteEle);
     getsNote(noteTitle.value, textareaEl.value);
+
+    // notu ekledikten sonra texterea and inputu boşalt
+    noteTitle.value = "";
+    textareaEl.value = "";
+}
+
+//🚨localStorage note silme func.u
+function removeNoteFromLocalStorage(title, content) {
+    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
+    const updatedNotes = allNotes.filter((note) => note.title !== title || note.content !== content);
+    localStorage.setItem("allNotes", JSON.stringify(updatedNotes));
+}
+
+// localStorage note divi göstermeI🤖
+function displayNotes() {
+    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
+
+    allNotes.forEach((note) => {
+        const noteEle = document.createElement("div");
+        noteEle.classList.add("note");
+        noteEle.innerHTML =
+            `
+            <h2>${note.title}</h2>
+            <p>${note.content}</p>
+            <button id="delete" class="btn"><i class="fa-solid fa-trash-can"></i></button>
+            `;
+
+        // note'un içindeki silme btn'u✅
+        noteEle.querySelector("#delete").addEventListener("click", function () {
+            noteEle.remove();
+            removeNoteFromLocalStorage(note.title, note.content);
+        });
+
+        noteList.appendChild(noteEle);
+    });
 }
 
 // ana silme btn'u✅
 const deleteBtn = document.getElementById("delete-note");
 deleteBtn.addEventListener("click", function () {
     noteList.remove();
-
     localStorage.removeItem("allNotes");
 });
 
-//addBtn.addEventListener("click", () => getsNote());
 
-// get and set data from local storage
+// set data in local storage✅
 function getsNote(title, content) {
     const note = { title: title, content: content };
-
+    /*
+    مهم نسوي كيت عشان نجيب البيانات القديمة بأي شي بنسويه 
+    هنا جبنا البيانات القدبمة هلق هون بما ان اول مره رح نضيف بيانات للوكال
+    فحيكون فارغ عشان كذا اول قيمه حتكون ارري فارغة
+    */
     const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
     allNotes.push(note);
 
     localStorage.setItem("allNotes", JSON.stringify(allNotes));
 }
-
 
 /*
 function getsNote() {

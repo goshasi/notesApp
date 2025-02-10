@@ -165,11 +165,11 @@ body {
 .notesList {
     width: 60%;
     padding: 20px 40px;
-
-    flex-wrap: wrap;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 20px;
 }
 
 .notesList .note {
