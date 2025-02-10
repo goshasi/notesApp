@@ -174,8 +174,8 @@ body {
 
 .notesList .note {
 
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 230px;
     background-color: var(--main-color);
     border-radius: 10px;
     overflow: hidden;
