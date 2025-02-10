@@ -55,20 +55,17 @@ if (allNotes) {
     allNotes.forEach(eletxt => addNote(eletxt));
 }
 
-let allNote = localStorage.getItem("keyname");
+let allNote = localStorage.getItem("key");
 allNote.forEach(item => {
     addNote(item);
 });
 */
 
-function getDataFromStorage() {
-    return JSON.parse(window.localStorage.getItem("allNotes"));
-}
 
 // ✅
 addBtn.addEventListener("click", () => addNote());
 
-function addNote(text = { title: "", content: "" }) {
+function addNote() {
     const noteEle = document.createElement("div");
     noteEle.classList.add("note");
     noteEle.innerHTML =
@@ -76,25 +73,38 @@ function addNote(text = { title: "", content: "" }) {
         <h2>${noteTitle.value}</h2>
         <p>${textareaEl.value}</p>
         <button id="delete-note" class="btn"><i class="fa-solid fa-trash-can"></i></button>
-    `;
+        `;
     // note'un içindeki silme btn'u
     noteEle.querySelector("#delete-note").addEventListener("click", function () {
         noteEle.remove();
 
     });
-    getDataFromStorage();
     noteList.appendChild(noteEle);
-
+    getsNote(noteTitle.value, textareaEl.value);
 }
 
 // ana silme btn'u✅
 const deleteBtn = document.getElementById("delete-note");
 deleteBtn.addEventListener("click", function () {
     noteList.remove();
-    getDataFromStorage();
+
+    localStorage.removeItem("allNotes");
 });
 
-addBtn.addEventListener("click", () => getsNote());
+//addBtn.addEventListener("click", () => getsNote());
+
+// get and set data from local storage
+function getsNote(title, content) {
+    const note = { title: title, content: content };
+
+    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
+    allNotes.push(note);
+
+    localStorage.setItem("allNotes", JSON.stringify(allNotes));
+}
+
+
+/*
 function getsNote() {
     const allNotes = [];
     const noteElements = document.querySelectorAll(".note");
@@ -104,38 +114,4 @@ function getsNote() {
     localStorage.setItem("allNotes", JSON.stringify(allNotes));
 
 }
-
-// 1 set data
-/*
-for man
-
-addBtn.addEventListener("click", () => getsNote());
-
-function getsNote() {
-    //let allNote = document.querySelectorAll(noteEle);
-    //console.log(allNote);
-    localStorage.setItem("keyname", addNote());
-}
-getsNote();
-}
-
-
-
-
-
-function gets() {
-
-    let titles = localStorage.getItem("valuetit");
-    let texts = localStorage.getItem("valuetex");
-}
-gets();
-
-function display() {
-    localStorage.setItem("valuetex", textareaEl.value);
-    localStorage.setItem("valuetit", noteTitle.value);
-    console.log(textareaEl.value);
-}
-display();
 */
-
-
