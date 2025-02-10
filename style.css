@@ -71,7 +71,6 @@ body {
 }
 
 .note-box {
-    min-width: 300px;
     min-height: 250px;
     background-color: #8568a8;
     display: flex;
