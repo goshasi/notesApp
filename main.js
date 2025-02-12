@@ -130,7 +130,8 @@ function displayNotes() {
 // ana silme btn'u✅
 const deleteBtn = document.getElementById("delete-note");
 deleteBtn.addEventListener("click", function () {
-    noteList.remove();
+    // noteList.remove();
+    noteList.innerHTML = "";
     localStorage.removeItem("allNotes");
 });
 
