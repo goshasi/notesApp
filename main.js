@@ -1,162 +1,137 @@
-/*const pNotes = document.getElementById("p-note");
-let dataNote = [
-    { title: "note1", "text": "hi this is text one" },
-
-];
-
-function readNote() {
-    document.getElementById("notesList").innerHTML = " ";
-    let index = 0;
-    for (key of dataNote) {
-        let content =
-            `
-               <div class="notesList">
-                    <div class="note not1">
-                         <h1 id="title">${dataNote.title}</h1>
-                         <p>${dataNote.text}</p>
-                         
-                    </div>
-               </div>
-            `;
-
-        document.getElementById("notesList").innerHTML += content;
-        index++;
-    }
-
-}
-readNote();
-
-
-// create 
-pNotes.addEventListener('keydown', function (event) {
-    if (event.key === "Enter") {
-        let obj = {
-            "title": "1",
-            "text": pNotes.textContent,
-        };
-        dataNote.push(obj);
-        readNote();
-    }
-});
-const noteTitle = document.getElementById("note-title");
-const notetext = document.getElementById("note-content");
-*/
-// 2 get data
-/*
-const allNotes = JSON.parse(localStorage.getItem("allNotes"));
-if (allNotes) {
-    allNotes.forEach(eletxt => addNote(eletxt));
-}
-
-let allNote = localStorage.getItem("key");
-allNote.forEach(item => {
-    addNote(item);
-});
-*/
-
-
-
-const addBtn = document.getElementById("add-note-btn");
-const noteTitle = document.getElementById("note-title");
-const textareaEl = document.querySelector("textarea");
-const noteList = document.querySelector(".notesList");
+var notes = {};
+const addNoteBtn = document.querySelector("#add-note-btn");
+const titleInput = document.querySelector("#note-title");
+const bodyInput = document.querySelector("#note-content");
+const noteList = document.querySelector("#notesList");
 
 // load all notes
 window.addEventListener("load", displayNotes);
 
 // yeni note ekleme with event
-addBtn.addEventListener("click", () => addNote());
+addNoteBtn.addEventListener("click", () => addNote());
 
 function addNote() {
-    if (noteTitle.value.trim() === "" || textareaEl.value.trim() === "") {
-        alert("please enter ur title and note!");
-        return;
-    }
+  if (titleInput.value.trim() === "") {
+    alert("please enter ur title!");
+    return;
+  }
+  if (bodyInput.value.trim() === "") {
+    alert("please enter ur note!");
+    return;
+  }
 
-    const noteEle = document.createElement("div");
-    noteEle.classList.add("note");
-    noteEle.innerHTML =
-        `
-        <h2>${noteTitle.value}</h2>
-        <p>${textareaEl.value}</p>
-        <button id="delete-note" class="btn"><i class="fa-solid fa-trash-can"></i></button>
-        `;
+  let id = saveNote(titleInput.value, bodyInput.value);
 
-    // note'un içindeki silme btn'u✅
-    noteEle.querySelector("#delete-note").addEventListener("click", function () {
-        noteEle.remove();
-        removeNoteFromLocalStorage(note.title, note.content);
-    });
+  addNoteToDom(titleInput.value, bodyInput.value, id);
 
-    noteList.appendChild(noteEle);
-    getsNote(noteTitle.value, textareaEl.value);
-
-    // notu ekledikten sonra texterea and inputu boşalt
-    noteTitle.value = "";
-    textareaEl.value = "";
+  // notu ekledikten sonra texterea and inputu boşalt
+  clearInputs();
 }
 
 //🚨localStorage note silme func.u
-function removeNoteFromLocalStorage(title, content) {
-    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
-    const updatedNotes = allNotes.filter((note) => note.title !== title || note.content !== content);
-    localStorage.setItem("allNotes", JSON.stringify(updatedNotes));
+function removeNoteFromLocalStorage(id) {
+  localStorage.removeItem(`note_${id}`);
+  delete notes[id];
+  displayNotes();    
 }
 
 // localStorage note divi göstermeI🤖
 function displayNotes() {
-    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
-
-    allNotes.forEach((note) => {
-        const noteEle = document.createElement("div");
-        noteEle.classList.add("note");
-        noteEle.innerHTML =
-            `
-            <h2>${note.title}</h2>
-            <p>${note.content}</p>
-            <button id="delete" class="btn"><i class="fa-solid fa-trash-can"></i></button>
-            `;
-
-        // note'un içindeki silme btn'u✅
-        noteEle.querySelector("#delete").addEventListener("click", function () {
-            noteEle.remove();
-            removeNoteFromLocalStorage(note.title, note.content);
-        });
-
-        noteList.appendChild(noteEle);
-    });
+    // remove current  notes from DOM 
+    noteList.innerHTML = "";
+    // get notes from local storage
+    notes = getNotesFromLocalStorage();
+    // display notes in DOM
+    for (const key in notes) {
+        addNoteToDom(notes[key].title, notes[key].content, key);
+    }
 }
-
 // ana silme btn'u✅
 const deleteBtn = document.getElementById("delete-note");
-deleteBtn.addEventListener("click", function () {
-    noteList.remove();
-    localStorage.removeItem("allNotes");
-});
+deleteBtn.addEventListener("click", deleteAllNotes);
 
+function deleteAllNotes () {
+   noteList.innerHTML = "";
+   let confirmDelete = confirm("Are you sure you want to delete all notes?");
+   if (confirmDelete !== "yes") {
+     let ids = JSON.parse(localStorage.getItem("note_keys"));
+     ids.forEach((id) => {
+       console.log(id);
+       localStorage.removeItem(`note_${id}`);
+     });
+     localStorage.removeItem("note_keys");
+   }
+ }
 
 // set data in local storage✅
-function getsNote(title, content) {
-    const note = { title: title, content: content };
-    /*
-    مهم نسوي كيت عشان نجيب البيانات القديمة بأي شي بنسويه 
-    هنا جبنا البيانات القدبمة هلق هون بما ان اول مره رح نضيف بيانات للوكال
-    فحيكون فارغ عشان كذا اول قيمه حتكون ارري فارغة
-    */
-    const allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
-    allNotes.push(note);
+function saveNote(title, content) {
+  let id = Math.random().toString(36).substr(2, 9);
+  // let allNotes = JSON.parse(localStorage.getItem("allNotes")) || [];
+  const note = {
+    id: id,
+    title: title,
+    content: content,
+  };
 
-    localStorage.setItem("allNotes", JSON.stringify(allNotes));
+  localStorage.setItem(`note_${id}`, JSON.stringify(note));
+
+  // add id
+  let key = localStorage.getItem("note_keys");
+  if (key != null) {
+    var ids = JSON.parse(key);
+  } else {
+    var ids = [];
+  }
+  ids.push(id);
+
+  localStorage.setItem("note_keys", JSON.stringify(ids));
+
+  return id;
+}
+function getNotesFromLocalStorage() {
+  let ids = JSON.parse(localStorage.getItem("note_keys"));
+
+  ids.forEach((id) => {
+    let note = JSON.parse(localStorage.getItem(`note_${id}`));
+    // notes.push(note);
+    notes[id] = note;
+  });
+
+  return notes;
 }
 
-/*
-function getsNote() {
-    const allNotes = [];
-    const noteElements = document.querySelectorAll(".note");
-    //console.log(noteElements);
-
-    noteElements.forEach(note => allNotes.push(note));
-    localStorage.setItem("allNotes", JSON.stringify(allNotes));
-
+function clearInputs() {
+  titleInput.value = "";
+  bodyInput.value = "";
 }
-*/
+function addNoteToDom(title, content, id) {
+  let noteEle = document.createElement("div");
+  noteEle.classList.add("note");
+
+  let noteTitle = document.createElement("h2");
+  noteTitle.innerHTML = title;
+  noteEle.appendChild(noteTitle);
+
+  let noteBody = document.createElement("p");
+  noteBody.innerHTML = content;
+  noteEle.appendChild(noteBody);
+
+  let noteDeleteBtn = document.createElement("button");
+  noteDeleteBtn.id = "delete-note";
+  noteDeleteBtn.classList.add("btn");
+  noteDeleteBtn.setAttribute("note-id", id);
+  noteEle.appendChild(noteDeleteBtn);
+
+  let noteDeleteIcon = document.createElement("i");
+  noteDeleteIcon.classList.add("fa-solid", "fa-trash-can");
+  noteDeleteBtn.appendChild(noteDeleteIcon);
+
+  // note'un içindeki silme btn'u✅
+  noteDeleteBtn.addEventListener("click", function (e) {
+    let id = noteDeleteBtn.getAttribute("note-id");
+    noteDeleteBtn.parentElement.remove();
+    removeNoteFromLocalStorage(id);
+  });
+
+  noteList.appendChild(noteEle);
+}
